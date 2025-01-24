@@ -1,3 +1,9 @@
+/*
+//Copyright 404
+//Licensed under MIT License
+*/
+
+
 package dev.blackdev.commands;
 
 import net.dv8tion.jda.api.Permission;
