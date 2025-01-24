@@ -1,3 +1,8 @@
+/*
+//Copyright 404
+//Licensed under MIT License
+*/
+
 package dev.blackdev;
 
 import dev.blackdev.commands.*;
