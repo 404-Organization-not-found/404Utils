@@ -25,6 +25,7 @@ public class UserInfoCommand extends ListenerAdapter {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(Color.BLACK);
             embed.setTitle("User Info");
+            embed.setThumbnail(user.getEffectiveAvatarUrl());
             embed.addField("Name", user.getName(), false);
             embed.addField("ID", user.getId(), false);
             embed.addField("Joined", member != null ? member.getTimeJoined().toString() : "N/A", false);
