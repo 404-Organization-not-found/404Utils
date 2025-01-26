@@ -1,19 +1,18 @@
-/*
-//Copyright 404
-//Licensed under MIT License
-*/
-
 package dev.blackdev;
 
 import dev.blackdev.commands.*;
 import dev.blackdev.events.Gateway;
 import io.github.cdimascio.dotenv.Dotenv;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,6 +31,33 @@ public class Main {
     private static int activityIndex = 0;
 
     public static void main(String[] args) {
+
+        TextChannel ticketChannel = jdabuilder.getTextChannelById(1332094477766099008L);
+        if (ticketChannel != null) {
+            ticketChannel.getIterableHistory().queue(messages -> {
+                for (var message : messages) {
+                    message.delete().queue();
+                }
+            });
+
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(Color.BLACK);
+            embed.setTitle("Create a Ticket");
+            embed.setDescription("Select the type of ticket you want to create:");
+
+            StringSelectMenu menu = StringSelectMenu.create("ticket_type")
+                    .addOption("Giveaway Claim", "giveaway_claim")
+                    .addOption("User Report", "user_report")
+                    .addOption("Bug Report", "bug_report")
+                    .build();
+
+            ticketChannel.sendMessageEmbeds(embed.build())
+                    .addActionRow(menu)
+                    .queue();
+        }
+
+
+
         jdabuilder.addEventListener(new Gateway());
         jdabuilder.addEventListener(new EmbendCommand());
         jdabuilder.addEventListener(new PingCommand());
@@ -40,6 +66,7 @@ public class Main {
         jdabuilder.addEventListener(new RoleInfoCommand());
         jdabuilder.addEventListener(new AvatarCommand());
         jdabuilder.addEventListener(new ClearMessagesCommand());
+        jdabuilder.addEventListener(new GiveawayCommand());
 
         jdabuilder.updateCommands().addCommands(
                 EmbendCommand.buildCommand(),
@@ -48,7 +75,8 @@ public class Main {
                 ServerInfoCommand.buildCommand(),
                 RoleInfoCommand.buildCommand(),
                 AvatarCommand.buildCommand(),
-                ClearMessagesCommand.buildCommand()
+                ClearMessagesCommand.buildCommand(),
+                GiveawayCommand.buildCommand()
         ).queue();
         System.out.println("Commands loaded");
 
