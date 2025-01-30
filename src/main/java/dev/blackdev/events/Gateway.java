@@ -1,12 +1,13 @@
 /*
 //Copyright 404
-//Licensed under MIT License
+//Licensed under Creative Commons Attribution-NonCommercial 4.0 International Public License
 */
 
 package dev.blackdev.events;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
@@ -22,6 +23,10 @@ public class Gateway extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         Member member = event.getMember();
+        Role role = event.getGuild().getRoleById(1333393716987035658L);
+        if (role != null) {
+            event.getGuild().addRoleToMember(member, role).queue();
+        }
         TextChannel channel = event.getGuild().getTextChannelById(CHANNEL_ID);
         if (channel != null) {
             EmbedBuilder embed = new EmbedBuilder();

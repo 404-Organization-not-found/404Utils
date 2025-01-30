@@ -1,3 +1,8 @@
+/*
+//Copyright 404
+//Licensed under Creative Commons Attribution-NonCommercial 4.0 International Public License
+*/
+
 package dev.blackdev.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;

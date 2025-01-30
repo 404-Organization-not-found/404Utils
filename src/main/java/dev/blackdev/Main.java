@@ -1,3 +1,8 @@
+/*
+//Copyright 404
+//Licensed under Creative Commons Attribution-NonCommercial 4.0 International Public License
+*/
+
 package dev.blackdev;
 
 import dev.blackdev.commands.*;
@@ -31,32 +36,6 @@ public class Main {
     private static int activityIndex = 0;
 
     public static void main(String[] args) {
-
-        TextChannel ticketChannel = jdabuilder.getTextChannelById(1332094477766099008L);
-        if (ticketChannel != null) {
-            ticketChannel.getIterableHistory().queue(messages -> {
-                for (var message : messages) {
-                    message.delete().queue();
-                }
-            });
-
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(Color.BLACK);
-            embed.setTitle("Create a Ticket");
-            embed.setDescription("Select the type of ticket you want to create:");
-
-            StringSelectMenu menu = StringSelectMenu.create("ticket_type")
-                    .addOption("Giveaway Claim", "giveaway_claim")
-                    .addOption("User Report", "user_report")
-                    .addOption("Bug Report", "bug_report")
-                    .build();
-
-            ticketChannel.sendMessageEmbeds(embed.build())
-                    .addActionRow(menu)
-                    .queue();
-        }
-
-
 
         jdabuilder.addEventListener(new Gateway());
         jdabuilder.addEventListener(new EmbendCommand());
